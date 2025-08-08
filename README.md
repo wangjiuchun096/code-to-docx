@@ -2,7 +2,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.7%2B-blue.svg)
-![Tests](https://github.com/username/code-to-docx/workflows/Tests/badge.svg)
+![Status](https://img.shields.io/badge/status-stable-green.svg)
 
 用于软著申请的代码收集工具，将指定目录下的代码文件合并到一个docx文档中。
 
@@ -12,7 +12,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/username/code-to-docx.git
+git clone https://github.com/YOUR-USERNAME/code-to-docx.git
 cd code-to-docx
 
 # 安装依赖
@@ -135,6 +135,14 @@ python code-to-docx.py --input ./src --title "软著申请代码文档"
 4. 页数估算基于每页约50行代码，实际页数可能有差异
 5. 生成的文档可能较大，请耐心等待处理完成
 6. 建议在处理前检查输入目录是否正确
+
+## 部署说明
+
+如果您要 Fork 本项目并发布到自己的 GitHub，请更新以下内容：
+
+1. 将 `README.md` 中的 `YOUR-USERNAME` 替换为您的 GitHub 用户名
+2. 如需要 CI 状态徽章，将 `.github/workflows/test.yml` 中的仓库地址更新
+3. 根据需要更新 `LICENSE` 文件中的版权信息
 
 ## 贡献
 
