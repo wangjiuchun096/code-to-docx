@@ -1,0 +1,67 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8, 3.9, '3.10', '3.11']
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        # 安装测试相关依赖（如果有的话）
+        # pip install pytest pytest-cov
+    
+    - name: Create test directories
+      run: |
+        mkdir -p test_src
+        mkdir -p output
+    
+    - name: Create test files
+      run: |
+        echo 'print("Hello World")' > test_src/hello.py
+        echo 'console.log("Hello JS");' > test_src/hello.js
+    
+    - name: Test script execution
+      run: |
+        python code-to-docx.py --help
+    
+    - name: Test config generation
+      run: |
+        python code-to-docx.py --generate-config
+        test -f config.json
+    
+    - name: Test with test files
+      run: |
+        python code-to-docx.py --input ./test_src --output ./output --filename test.docx
+        test -f output/test.docx
+    
+    - name: Test with page limit
+      run: |
+        python code-to-docx.py --input ./test_src --output ./output --filename test-limited.docx --max-pages 5
+        test -f output/test-limited.docx
+    
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-results-python-${{ matrix.python-version }}
+        path: |
+          output/*.docx
+          config.json
